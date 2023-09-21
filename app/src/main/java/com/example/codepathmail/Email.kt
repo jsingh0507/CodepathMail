@@ -2,5 +2,6 @@ class Email(
     val sender: String,
     val title: String,
     val summary: String,
-    val time: String) {
+    val time: String,
+    var isRead: Boolean ) {
 }

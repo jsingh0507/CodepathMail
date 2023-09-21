@@ -1,3 +1,4 @@
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,12 +44,35 @@ class EmailAdapter(private val emails: List<Email>) : RecyclerView.Adapter<Email
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Get the data model based on position
-        val email = emails.get(position)
-        // Set item views based on views and data model
+        val email = emails[position]
+
         holder.senderTextView.text = email.sender
         holder.titleTextView.text = email.title
         holder.summaryTextView.text = email.summary
         holder.timeTextView.text = email.time
+
+        // Check the 'isRead' flag and set the text style accordingly
+        if (email.isRead) {
+            holder.titleTextView.setTypeface(null, Typeface.NORMAL) // Mark as read - remove bold
+            holder.senderTextView.setTypeface(null, Typeface.NORMAL)
+        } else {
+            holder.titleTextView.setTypeface(null, Typeface.BOLD) // Unread - set to bold
+            holder.senderTextView.setTypeface(null, Typeface.BOLD)
+        }
+
+        // Handle click events to mark emails as read
+        holder.itemView.setOnClickListener {
+            if (!email.isRead) {
+                email.isRead = true
+                holder.titleTextView.setTypeface(null, Typeface.NORMAL) // Mark as read - remove bold
+                holder.senderTextView.setTypeface(null, Typeface.NORMAL)
+            }
+            // Handle the click event (e.g., open the email)
+            // ...
+        }
     }
 }
+
+
+
+
